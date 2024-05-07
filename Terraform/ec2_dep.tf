@@ -4,14 +4,14 @@ provider "aws"{
   profile="default"
 }
 
-resource "aws_vpc""myvpc"{
+resource "aws_vpc" "myvpc"{
   cidr_block=var.vpc_cidr
   tags={
     Name=var.vpc_name
    }
 }
 
-resource "aws_subnet""subnetA"{
+resource "aws_subnet" "subnetA"{
   vpc_id=aws_vpc.myvpc.id
   cidr_block=var.subnetA_cidr
   tags={
@@ -19,7 +19,7 @@ resource "aws_subnet""subnetA"{
   }
 }
 
-resource "aws_subnet""subnetB"{
+resource "aws_subnet" "subnetB"{
   vpc_id=aws_vpc.myvpc.id
   cidr_block=var.subnetB_cidr
   tags={
@@ -27,10 +27,10 @@ resource "aws_subnet""subnetB"{
   }
 }
 
-resource "aws_security_group""mysg"{
+resource "aws_security_group" "mysg"{
   vpc_id=aws_vpc.myvpc.id
   tags={
-    Name="Terra-SG"
+    Name="Terraform-SG"
   }
   ingress{
     protocol="tcp"
@@ -51,8 +51,7 @@ resource "aws_instance""myec2"{
   instance_type="t2.micro"
   subnet_id=aws_subnet.subnetA.id
   tags={
-    Name="Terra-Ec2"
+    Name="Terraform-2"
   }
   security_groups=[aws_security_group.mysg.id]
-  key_name="K8"
 }
